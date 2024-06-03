@@ -28,7 +28,7 @@ const perform = async (props) => {
   const { child, path } = props
   let _child = { ...child }
 
-  if (child.properties && _child.properties.dataMastermailDoNotOptimize) {
+  if (child.properties && _child.properties.dataNotifilesDoNotOptimize) {
     return child
   }
 

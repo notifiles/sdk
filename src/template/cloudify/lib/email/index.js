@@ -44,7 +44,7 @@ const perform = async (props) => {
   const { child, path, buildPaths, settings, entry } = props
   let _child = { ...child }
 
-  if (child.properties && child.properties.dataMastermailDoNotCloudify) {
+  if (child.properties && child.properties.dataNotifilesDoNotCloudify) {
     return child
   }
 

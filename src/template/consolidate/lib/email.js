@@ -33,7 +33,7 @@ const perform = async (props) => {
   const { child, path } = props
   let _child = { ...child }
 
-  if (child.properties && child.properties.dataMastermailDoNotConsolidate) {
+  if (child.properties && child.properties.dataNotifilesDoNotConsolidate) {
     return child
   }
 
