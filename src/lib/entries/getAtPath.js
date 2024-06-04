@@ -46,7 +46,7 @@ const perform = async (props) => {
 
 
       let testMessagePath = fsPath.join(folderPath, 'textmessage.txt')
-      let pushPath = fsPath.join(folderPath, 'push.txt')
+      let pushPath = fsPath.join(folderPath, 'pushnotification.txt')
       const i18nPath = fsPath.join(folderPath, 'i18n.json')
       let manifest = await importJSONAsync(fsPath.join(folderPath, 'manifest.json'))
 
@@ -63,7 +63,7 @@ const perform = async (props) => {
 
       // const module = await import(emailPath)
       let textMessage = null
-      let push = null
+      let pushNotification = null
       let i18n = null
 
       if (await checkFileExists(testMessagePath)) {
@@ -71,7 +71,7 @@ const perform = async (props) => {
       }
 
       if (await checkFileExists(pushPath)) {
-        push = await fs.promises.readFile(pushPath, 'utf8')
+        pushNotification = await fs.promises.readFile(pushPath, 'utf8')
       }
 
       if (await checkFileExists(i18nPath)) {
@@ -85,7 +85,7 @@ const perform = async (props) => {
         path: folderPath,
         // email: module,
         textMessage,
-        push,
+        pushNotification,
         i18n: i18n ? i18n : {},
         manifest,
         activity
