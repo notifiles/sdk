@@ -116,6 +116,7 @@
     "twitter": "^1.7.1",
     "underscore": "^1.13.6",
     "unified": "^11.0.4",
+    "walk": "^2.3.15",
     "yaml": "^2.4.2"
   },
   "devDependencies": {

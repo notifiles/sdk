@@ -1,9 +1,9 @@
-import upload from './upload.js'
 import fs from 'fs'
 import updateActivity from '../../lib/activity/updateToFile.js'
 import getActivity from '../../lib/activity/get.js'
 import importJSONAsync from '../../../lib/fs/importJSONAsync.js'
 import checkFileExists from '../../../lib/fs/checkFileExists.js'
+import syncFolder from './syncFolder.js'
 
 export default async (props) => {
 
@@ -46,17 +46,10 @@ export default async (props) => {
   let uploadResult = null
   for (var i in clouds) {
     const cloud = clouds[i]
-    uploadResult = await upload({
+    uploadResult = await syncFolder({
       id: cloud.id,
-      sourceUrl: buildPaths.pushNotification.text,
-      filename: buildPaths.pushNotification.textFileName,
-      auth: cloud.auth,
-      settings
-    })
-    uploadResult = await upload({
-      id: cloud.id,
-      sourceUrl: buildPaths.pushNotification.manifestFileNameBuilt,
-      filename: buildPaths.pushNotification.manifestFileName,
+      sourceUrl: buildPaths.pushNotification.container,
+      destinationPath: buildPaths.pushNotification.containerRemote,
       auth: cloud.auth,
       settings
     })

@@ -22,6 +22,7 @@ export default async ({
       buildPaths: {
         email: {
           container: `${path}/.build/email/${code}`,
+          containerRemote: `${entry.slug}/email/${code}`,
           body: `${path}/.build/email/${code}/body.html`,
           bodyFileName: `${entry.slug}/email/${code}/body.html`,
           text: `${path}/.build/email/${code}/text.txt`,
@@ -35,6 +36,7 @@ export default async ({
         },
         textMessage: {
           container: `${path}/.build/textmessage/${code}`,
+          containerRemote: `${entry.slug}/textmessage/${code}`,
           text: `${path}/.build/textmessage/${code}/textmessage.txt`,
           textFileName: `${entry.slug}/textmessage/${code}/textmessage.txt`,
           assetsContainer: `${entry.slug}/textmessage/${code}/assets`,
@@ -43,6 +45,7 @@ export default async ({
         },
         pushNotification: {
           container: `${path}/.build/pushnotification/${code}`,
+          containerRemote: `${entry.slug}/pushnotification/${code}`,
           text: `${path}/.build/pushnotification/${code}/pushnotification.txt`,
           textFileName: `${entry.slug}/pushnotification/${code}/pushnotification.txt`,
           assetsContainer: `${entry.slug}/pushnotification/${code}/assets`,

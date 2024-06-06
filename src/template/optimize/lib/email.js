@@ -1,9 +1,10 @@
 import hastToHtml from '../../../lib/remark/hastToHtml.js'
 import treatImage from './image/index.js'
+import fs from 'fs'
 
 export default async (props) => {
   const { entry } = props
-  const { path, email: { hast } } = entry
+  const { path, email: { hast }, buildPaths } = entry
 
   let _hast = await perform({
     child: hast,
@@ -11,6 +12,11 @@ export default async (props) => {
   })
 
   let body = hastToHtml({ data: _hast })
+
+  await fs.promises.writeFile(
+    buildPaths.email.body,
+    body
+  )
 
   return {
     entry: {

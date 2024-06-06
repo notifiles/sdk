@@ -10,5 +10,5 @@ export default async (props) => {
     }
   }
 
-  return cloudLibrary.remove(props)
+  return cloudLibrary.syncFolder(props)
 }

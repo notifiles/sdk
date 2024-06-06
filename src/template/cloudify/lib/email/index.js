@@ -1,7 +1,6 @@
 import hastToHtml from '../../../../lib/remark/hastToHtml.js'
-import treatAttachments from './attachments/index.js'
 import treatImage from './image/index.js'
-
+import fs from 'fs'
 
 export default async (props) => {
   const { entry, settings } = props
@@ -15,17 +14,14 @@ export default async (props) => {
     buildPaths
   })
 
-  await treatAttachments({
-    path,
-    settings,
-    buildPaths,
-    entry
-  })
-
   // let md = await mdastToMarkdown({ mdast })
   let body = hastToHtml({ data: _hast })
   // await fs.promises.writeFile(`${path}/.build/html/email.cloud.html`, html)
 
+  await fs.promises.writeFile(
+    buildPaths.email.body,
+    body
+  )
 
   return {
     entry: {

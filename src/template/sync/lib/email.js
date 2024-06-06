@@ -1,4 +1,4 @@
-import upload from './upload.js'
+import syncFolder from './syncFolder.js'
 import fs from 'fs'
 import updateActivity from '../../lib/activity/updateToFile.js'
 import getActivity from '../../lib/activity/get.js'
@@ -10,10 +10,10 @@ export default async (props) => {
   const { path, email, buildPaths, } = entry
   const { body, } = email
 
-  await fs.promises.writeFile(
-    buildPaths.email.body,
-    body
-  )
+  // await fs.promises.writeFile(
+  //   buildPaths.email.body,
+  //   body
+  // )
 
   let manifest = await importJSONAsync(
     buildPaths.manifestFileNameBuilt,
@@ -38,31 +38,10 @@ export default async (props) => {
   let uploadResult = null
   for (var i in clouds) {
     const cloud = clouds[i]
-    uploadResult = await upload({
+    uploadResult = await syncFolder({
       id: cloud.id,
-      sourceUrl: buildPaths.email.body,
-      filename: buildPaths.email.bodyFileName,
-      auth: cloud.auth,
-      settings
-    })
-    uploadResult = await upload({
-      id: cloud.id,
-      sourceUrl: buildPaths.email.text,
-      filename: buildPaths.email.textFileName,
-      auth: cloud.auth,
-      settings
-    })
-    uploadResult = await upload({
-      id: cloud.id,
-      sourceUrl: buildPaths.email.subject,
-      filename: buildPaths.email.subjectFileName,
-      auth: cloud.auth,
-      settings
-    })
-    uploadResult = await upload({
-      id: cloud.id,
-      sourceUrl: buildPaths.email.manifestFileNameBuilt,
-      filename: buildPaths.email.manifestFileName,
+      sourceUrl: buildPaths.email.container,
+      destinationPath: buildPaths.email.containerRemote,
       auth: cloud.auth,
       settings
     })

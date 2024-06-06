@@ -7,6 +7,7 @@ import optimize from '../optimize/entry.js'
 import version from '../version/entry.js'
 import cloudify from '../cloudify/entry.js'
 import adaptSettings from '../../lib/adaptSettings.js'
+import attach from '../attach/entry.js'
 
 export default async ({
   path,
@@ -32,7 +33,11 @@ export default async ({
     entry = (await consolidate({ entry, settings })).entry
     entry = (await optimize({ entry, settings })).entry
     entry = (await cloudify({ entry, settings })).entry
-    entry = (await sync({ entry, settings })).entry
+    entry = (await attach({ entry, settings })).entry
+    if (!settings.dryRun) {
+      entry = (await sync({ entry, settings })).entry
+    }
+
 
     await version({})
   }
