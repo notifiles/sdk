@@ -8,7 +8,8 @@ export default async (props) => {
 
   let _hast = await perform({
     child: hast,
-    path
+    path,
+    buildPaths
   })
 
   let body = hastToHtml({ data: _hast })
@@ -31,7 +32,7 @@ export default async (props) => {
 }
 
 const perform = async (props) => {
-  const { child, path } = props
+  const { child, path, buildPaths } = props
   let _child = { ...child }
 
   if (child.properties && _child.properties.dataNotifilesDoNotOptimize) {
@@ -42,7 +43,8 @@ const perform = async (props) => {
     case 'img': {
       _child = await treatImage({
         child: _child,
-        path
+        path,
+        buildPaths
       })
     } break
     default:

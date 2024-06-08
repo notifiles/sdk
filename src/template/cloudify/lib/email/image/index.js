@@ -16,27 +16,28 @@ export default async ({ child,
     src: _url,
   } } = child
 
-
+  //#region CACHE
   let _activity = await getActivity({ path })
-  if (!settings.forceUploadAssets) {
-    const codeActivity = _activity[entry.code]
-    if (codeActivity) {
-      const files = codeActivity.files
-      if (files && files[_url]) {
-        const cache = files[_url]
-        return {
-          ...child,
-          properties: {
-            ...child.properties,
-            src: cache.url
-          }
-        }
-      }
-    }
-  }
+  // if (!settings.forceUploadAssets) {
+  //   const codeActivity = _activity[entry.code]
+  //   if (codeActivity) {
+  //     const files = codeActivity.files
+  //     if (files && files[_url]) {
+  //       const cache = files[_url]
+  //       return {
+  //         ...child,
+  //         properties: {
+  //           ...child.properties,
+  //           src: cache.url
+  //         }
+  //       }
+  //     }
+  //   }
+  // }
+  //#endregion
 
   let result
-  const destination = `${path}/.assets`
+  const destination = buildPaths.email.assetsContainer
   if (isLocal(_url)) {
     result = await treatLocalFile({ url: _url, path, destination })
   }
@@ -53,7 +54,7 @@ export default async ({ child,
     uploadResult = await upload({
       id: cloud.id,
       sourceUrl,
-      filename: `${buildPaths.email.assetsContainer}/${filename}`,
+      filename: `${buildPaths.email.assetsContainerRemote}/${filename}`,
       auth: cloud.auth,
       settings
     })

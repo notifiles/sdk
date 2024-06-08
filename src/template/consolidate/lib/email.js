@@ -7,12 +7,11 @@ export default async (props) => {
   const { entry } = props
   const { path, email: { hast }, buildPaths } = entry
 
-  const destination = `${path}/.assets`
-  await ensureDirectoryExists(destination, false)
 
   const _hast = await perform({
     child: hast,
     path,
+    buildPaths
 
   })
 
@@ -36,7 +35,7 @@ export default async (props) => {
 }
 
 const perform = async (props) => {
-  const { child, path } = props
+  const { child, path, buildPaths } = props
   let _child = { ...child }
 
   if (child.properties && child.properties.dataNotifilesDoNotConsolidate) {
@@ -47,7 +46,8 @@ const perform = async (props) => {
     case 'img': {
       _child = await treatImage({
         child: _child,
-        path
+        path,
+        buildPaths
       })
     } break
     default:

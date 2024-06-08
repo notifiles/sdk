@@ -14,9 +14,7 @@ export default async (props) => {
     buildPaths
   })
 
-  // let md = await mdastToMarkdown({ mdast })
   let body = hastToHtml({ data: _hast })
-  // await fs.promises.writeFile(`${path}/.build/html/email.cloud.html`, html)
 
   await fs.promises.writeFile(
     buildPaths.email.body,

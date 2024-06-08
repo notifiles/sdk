@@ -16,7 +16,8 @@ export default async ({ url,
     const filename = fsPath.basename(item.filename)
 
     return {
-      filename
+      filename,
+      path: `${destination}/${filename}`
     }
   }
   catch (e) {

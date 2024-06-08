@@ -10,5 +10,6 @@ export default async ({
   await fs.promises.cp(sourceUrl, _destination)
   return {
     filename,
+    path: _destination
   }
 }
