@@ -9,6 +9,7 @@ import emailTemplateMaster from './templates/email.mastered.js'
 import textmessageTemplate from './templates/textmessage.js'
 import pushnotificationTemplate from './templates/pushnotification.js'
 import _slug from 'slug'
+import ensureDirectoryExists from '../../lib/fs/ensureDirectoryExists.js'
 
 export default async ({
   path,
@@ -28,6 +29,8 @@ export default async ({
       }
       await fs.promises.rmdir(folderPath, { recursive: true })
     }
+
+    await ensureDirectoryExists(folderPath)
 
     await fs.promises.mkdir(folderPath)
     await fs.promises.mkdir(`${folderPath}/attachments`)
