@@ -1,4 +1,4 @@
-import perform from './lib/email.js'
+import perform from './entry.js'
 import getEntries from '../../lib/entries/getAtPath.js'
 
 export default async ({

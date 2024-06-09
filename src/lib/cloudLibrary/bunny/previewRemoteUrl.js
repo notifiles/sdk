@@ -6,11 +6,12 @@ export default async ({
 
   try {
     const {
-      endPoint,
-      bucketName
+      accessKey,
+      storageZoneName,
+      pullZone
     } = auth
 
-    const url = `https://${endPoint}/${bucketName}/${filename}`
+    const url = `https://${pullZone}.b-cdn.net/${filename}`
     return url
 
   } catch (e) {
