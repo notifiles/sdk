@@ -1,38 +1,30 @@
 import fsPath from 'path'
 import fs from 'fs'
 import checkFileExists from '../../../lib/fs/checkFileExists.js'
-import YAML from 'yaml'
+import importJSONAsync from '../../../lib/fs/importJSONAsync.js'
 
 export default async ({
   path,
-  data = {}
+  data = {},
 }) => {
 
 
   try {
 
-    const filePath = fsPath.join(path, "manifest.yaml")
+    const filePath = fsPath.join(path, "manifest.json")
 
     if ((await checkFileExists(filePath))) {
       return
     }
 
-
-    let defaultManifest = YAML.parse(`
-      status: draft
-      skip: false
-      license: all-rights-reserved
-    `)
-
-    let manifest = {
-      ...defaultManifest,
+    const defaultContent = await importJSONAsync('./defaultContent.json')
+    let content = {
+      ...defaultContent,
       createdAt: (new Date()),
-      ...data
+      ...data,
     }
 
-    manifest = YAML.stringify(manifest)
-
-    await fs.promises.writeFile(filePath, manifest)
+    await fs.promises.writeFile(filePath, JSON.stringify(content, null, 2))
     return true
   } catch (e) {
     console.error(e)

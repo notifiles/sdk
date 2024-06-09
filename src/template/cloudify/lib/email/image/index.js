@@ -80,7 +80,6 @@ export default async ({ child,
     content: _activity,
   })
 
-
   return {
     ...child,
     properties: {

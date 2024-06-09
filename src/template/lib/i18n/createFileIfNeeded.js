@@ -5,15 +5,13 @@ import importJSONAsync from '../../../lib/fs/importJSONAsync.js'
 
 export default async ({
   path,
-  data = {
-    status: "draft"
-  },
+  data = {},
 }) => {
 
 
   try {
 
-    const filePath = fsPath.join(path, ".activity.json")
+    const filePath = fsPath.join(path, "i18n.json")
 
     if ((await checkFileExists(filePath))) {
       return

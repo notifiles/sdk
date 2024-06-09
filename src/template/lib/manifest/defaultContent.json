@@ -1,0 +1,9 @@
+{
+  "id": "codevalidation",
+  "groupId": "",
+  "dependsOnUser": true,
+  "agent": {
+    "type": "manual",
+    "params": {}
+  }
+}

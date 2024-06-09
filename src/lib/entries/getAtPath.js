@@ -6,6 +6,8 @@ import isPathEntry from './isPathEntry.js'
 import importJSONAsync from "../fs/importJSONAsync.js"
 import slug from 'slug'
 import createActivityIfNeeded from '../../template/lib/activity/createFileIfNeeded.js'
+import createManifestIfNeeded from '../../template/lib/manifest/createFileIfNeeded.js'
+import createi18nIfNeeded from '../../template/lib/i18n/createFileIfNeeded.js'
 
 const perform = async (props) => {
   const {
@@ -44,14 +46,14 @@ const perform = async (props) => {
         })
       }
 
-
       let testMessagePath = fsPath.join(folderPath, 'textmessage.txt')
       let pushPath = fsPath.join(folderPath, 'pushnotification.txt')
       const i18nPath = fsPath.join(folderPath, 'i18n.json')
       let manifest = await importJSONAsync(fsPath.join(folderPath, 'manifest.json'))
 
       await createActivityIfNeeded({ path: folderPath })
-
+      await createManifestIfNeeded({ path: folderPath })
+      await createi18nIfNeeded({ path: folderPath })
 
       let activity
       const activityPath = fsPath.join(folderPath, '.activity.json')
@@ -77,7 +79,6 @@ const perform = async (props) => {
       if (await checkFileExists(i18nPath)) {
         i18n = await importJSONAsync(i18nPath)
       }
-
 
       return [{
         name: item,

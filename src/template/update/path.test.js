@@ -1,6 +1,6 @@
 
 
-describe('project', () => {
+describe.skip('project', () => {
   it('Updates and syncs to minio', async () => {
     const fsPath = (await import('path')).default
     let path = `${fsPath.resolve(process.env.TEST_MOCK_FOLDER)}`

@@ -1,20 +1,18 @@
 import fsPath from 'path'
 import checkFileExists from '../../../lib/fs/checkFileExists.js'
-import importYAMLAsync from '../../../lib/fs/importYAMLAsync.js'
-
+import importJSONAsync from '../../../lib/fs/importJSONAsync.js'
 
 export default async ({
   path,
 }) => {
   try {
-    const filePath = fsPath.join(path, "manifest.yaml")
+    const filePath = fsPath.join(path, "manifest.json")
 
     if (!(await checkFileExists(filePath))) {
       return null
     }
 
-    const content = await importYAMLAsync(manifestPath)
-    return content
+    return importJSONAsync(filePath)
   } catch (e) {
     console.error(e)
   }

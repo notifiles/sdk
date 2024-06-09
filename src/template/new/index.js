@@ -1,24 +1,26 @@
 import fsPath from 'path'
 import fs from 'fs'
 import checkFileExists from '../../lib/fs/checkFileExists.js'
-import createStatusIfNeeded from '../lib/activity/createFileIfNeeded.js'
+import createActivityIfNeeded from '../lib/activity/createFileIfNeeded.js'
 import createManifestIfNeeded from '../lib/manifest/createFileIfNeeded.js'
+import createi18nIfNeeded from '../lib/i18n/createFileIfNeeded.js'
+import emailTemplate from './templates/email.tsx.js'
+import emailTemplateMaster from './templates/email.mastered.js'
+import textmessageTemplate from './templates/textmessage.js'
+import pushnotificationTemplate from './templates/pushnotification.js'
+import _slug from 'slug'
 
 export default async ({
   path,
-  title = "My new post",
-  platforms = [],
-  status = "draft",
-  canonicalUrl = "",
+  title = "My new template",
   tags,
-  author = {
-    id: "",
-    name: ""
-  },
-  force = false
+  i18n = {},
+  force = false,
+  emailType = 'mastered'
 }) => {
   try {
-    const folderPath = fsPath.join(path, title)
+    const slug = _slug(title)
+    const folderPath = fsPath.join(path, slug)
 
     if ((await checkFileExists(folderPath))) {
       if (!force) {
@@ -28,39 +30,43 @@ export default async ({
     }
 
     await fs.promises.mkdir(folderPath)
-    await fs.promises.mkdir(`${folderPath}/.assets`)
-    // await fs.promises.mkdir(`${folderPath}/artefacts`)
-    await fs.promises.mkdir(`${folderPath}/.build`)
+    await fs.promises.mkdir(`${folderPath}/attachments`)
+    await fs.promises.mkdir(`${folderPath}/.cache`)
 
-
-    await createStatusIfNeeded({
+    await createActivityIfNeeded({
       path: folderPath
     })
 
     await createManifestIfNeeded({
       path: folderPath,
       data: {
+        id: slug,
         name: title,
-        platforms,
-        canonicalUrl,
-        status,
-        author,
         tags
       }
     })
 
+    await createi18nIfNeeded({
+      path: folderPath,
+      data: i18n
+    })
 
-    const postPath = fsPath.join(folderPath, "post.md")
-    const post = `# ${title}`
-    await fs.promises.writeFile(postPath, post, 'utf8')
+    const emailPath = fsPath.join(folderPath, "email.tsx")
+    const email = (emailType === 'mastered') ? await emailTemplateMaster({}) : await emailTemplate({})
+    await fs.promises.writeFile(emailPath, email, 'utf8')
 
-    const excerptPath = fsPath.join(folderPath, "excerpt.md")
-    const excerpt = ``
-    await fs.promises.writeFile(excerptPath, excerpt, 'utf8')
+    const textMessagePath = fsPath.join(folderPath, "textMessage.txt")
+    const textMessage = await textmessageTemplate({})
+    await fs.promises.writeFile(textMessagePath, textMessage, 'utf8')
+
+    const pushNotificationPath = fsPath.join(folderPath, "pushnotification.txt")
+    const pushNotification = await pushnotificationTemplate({})
+    await fs.promises.writeFile(pushNotificationPath, pushNotification, 'utf8')
 
     return true
   } catch (e) {
     console.error(e)
   }
+
   return false
 }
