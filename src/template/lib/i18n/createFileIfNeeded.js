@@ -20,7 +20,6 @@ export default async ({
     const defaultContent = await importJSONAsync('./defaultContent.json')
     let content = {
       ...defaultContent,
-      createdAt: (new Date()),
       ...data,
     }
 

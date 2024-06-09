@@ -54,6 +54,7 @@ export default async ({
     const emailPath = fsPath.join(folderPath, "email.tsx")
     const email = (emailType === 'mastered') ? await emailTemplateMaster({}) : await emailTemplate({})
     await fs.promises.writeFile(emailPath, email, 'utf8')
+    await fs.promises.writeFile(fsPath.join(folderPath, "email.subject.txt"), "", 'utf8')
 
     const textMessagePath = fsPath.join(folderPath, "textMessage.txt")
     const textMessage = await textmessageTemplate({})
