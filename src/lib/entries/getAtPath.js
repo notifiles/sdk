@@ -4,10 +4,11 @@ import fsPath from 'path'
 import _ from 'underscore'
 import isPathEntry from './isPathEntry.js'
 import importJSONAsync from "../fs/importJSONAsync.js"
-import slug from 'slug'
+// import slug from 'slug'
 import createActivityIfNeeded from '../../template/lib/activity/createFileIfNeeded.js'
 import createManifestIfNeeded from '../../template/lib/manifest/createFileIfNeeded.js'
 import createi18nIfNeeded from '../../template/lib/i18n/createFileIfNeeded.js'
+import slugify from '../../template/new/lib/slugify.js'
 
 const perform = async (props) => {
   const {
@@ -82,7 +83,8 @@ const perform = async (props) => {
 
       return [{
         name: item,
-        slug: slug(item),
+        // slug: slug(item),
+        slug: slugify(item),
         path: folderPath,
         // email: module,
         textMessage,
