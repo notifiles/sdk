@@ -2,6 +2,7 @@
   "id": "codevalidation",
   "groupId": "",
   "dependsOnUser": true,
+  "status": "published",
   "agent": {
     "type": "manual",
     "params": {}

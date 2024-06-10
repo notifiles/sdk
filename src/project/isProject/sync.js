@@ -9,7 +9,7 @@ export default ({ path }) => {
       return false
     }
 
-    const targetPath = `${path}/manifest.yaml`
+    const targetPath = `${path}/notifiles.config.js`
     const exists = fs.existsSync(targetPath)
     return exists
   } catch (e) {

@@ -2,8 +2,6 @@ import { execa } from 'execa';
 import fs from 'fs';
 import translate from './translate.js';
 import htmlToHast from '../../../../lib/remark/htmlToHast.js';
-import { render } from '@react-email/render';
-import React from 'react'
 
 export default async (props) => {
 
@@ -15,15 +13,23 @@ export default async (props) => {
 
 
   // const a = await fs.promises.readFile(`${path}/email.tsx`, 'utf8')
-  const a = (await import(`${path}/email.tsx`))
-  const html_ = render(a, {
-    pretty: true,
-  })
+  // // const a = (await import(`${path}/email.tsx`))
+  // const component = React.createElement()
+  // const html_ = await renderAsync(a, {
+  //   pretty: true,
+  // })
 
 
-  const { stdout } = await execa`npx react-email@2.1.4 export --pretty --plainText --dir ${path} --outDir ${path}/.build/temp/email/${code}/text`;
-  const { stdoutB } = await execa`npx react-email@2.1.4 export --pretty --dir ${path} --outDir ${path}/.build/temp/email/${code}/html`;
+  const { stdout } = await execa`npx react-email@2.1.4 export
+  --pretty
+  --plainText
+  --dir ${path}
+  --outDir ${path}/.build/temp/email/${code}/text`
 
+  const { stdoutB } = await execa`npx react-email@2.1.4 export
+  --pretty
+  --dir ${path}
+  --outDir ${path}/.build/temp/email/${code}/html`
 
 
   await fs.promises.cp(

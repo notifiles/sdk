@@ -21,6 +21,6 @@ export default async (props) => {
     return false
   }
 
-  const manifestPath = fsPath.join(path, 'manifest.yaml')
+  const manifestPath = fsPath.join(path, 'notifiles.config.js')
   return checkFileExists(manifestPath)
 }
