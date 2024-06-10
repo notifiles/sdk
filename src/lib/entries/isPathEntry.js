@@ -22,7 +22,7 @@ export default async (props) => {
   }
 
   const postPath = fsPath.join(path, 'email.js')
-  const postPath2 = fsPath.join(path, 'email.tsx')
+  const postPath2 = fsPath.join(path, 'email.react-email.tsx')
 
   return ((await checkFileExists(postPath))
     || (await checkFileExists(postPath2)))

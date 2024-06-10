@@ -4,7 +4,7 @@ import checkFileExists from '../../lib/fs/checkFileExists.js'
 import createActivityIfNeeded from '../lib/activity/createFileIfNeeded.js'
 import createManifestIfNeeded from '../lib/manifest/createFileIfNeeded.js'
 import createi18nIfNeeded from '../lib/i18n/createFileIfNeeded.js'
-import emailTemplate from './templates/email.tsx.js'
+import emailTemplate from './templates/email.react-email.tsx.js'
 import emailTemplateMaster from './templates/email.mastered.js'
 import textmessageTemplate from './templates/textmessage.js'
 import pushnotificationTemplate from './templates/pushnotification.js'
@@ -51,7 +51,7 @@ export default async ({
       data: i18n
     })
 
-    const emailPath = fsPath.join(folderPath, "email.tsx")
+    const emailPath = fsPath.join(folderPath, "email.react-email.tsx")
     const email = (emailType === 'mastered') ? await emailTemplateMaster({}) : await emailTemplate({})
     await fs.promises.writeFile(emailPath, email, 'utf8')
     await fs.promises.writeFile(fsPath.join(folderPath, "email.subject.txt"), "", 'utf8')

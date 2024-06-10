@@ -12,8 +12,8 @@ export default async (props) => {
     language } = entry
 
 
-  // const a = await fs.promises.readFile(`${path}/email.tsx`, 'utf8')
-  // // const a = (await import(`${path}/email.tsx`))
+  // const a = await fs.promises.readFile(`${path}/email.react-email.tsx`, 'utf8')
+  // // const a = (await import(`${path}/email.react-email.tsx`))
   // const component = React.createElement()
   // const html_ = await renderAsync(a, {
   //   pretty: true,
