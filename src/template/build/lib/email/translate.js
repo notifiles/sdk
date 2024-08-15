@@ -1,16 +1,25 @@
 export default ({ text, strings }) => {
-  const replacer = (match, p1) => {
-    const str = match.trim().replace('[[', '').replace(']]', '')
+  let _text = text
 
-    if (!strings[str]) {
-      return match
+  const firsts = _text.split('[[')
+  let matched = firsts.map(element => {
+    if (element.indexOf(']]') === -1) {
+      return element
     }
 
-    const prefix = match[0] === " " ? " " : ""
-    const suffix = match[match.length - 1] === " " ? " " : ""
-    return prefix + strings[str] + suffix
-  }
+    let seconds = element.split(']]')
+    const key = seconds[0]
+    const value = strings[key]
+    if (!value) {
+      return seconds.join('')
+    }
+    seconds = seconds.length > 1
+      ? seconds.slice(1, seconds.length)
+      : seconds
+    return [value, seconds].join('')
+  })
 
-  const reg = new RegExp(/ *\[\[[^)]*\]\] */g)
-  return text.replaceAll(reg, replacer)
+  matched = matched.join('')
+  return matched
+
 }

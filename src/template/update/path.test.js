@@ -11,10 +11,10 @@ describe('project', () => {
         clouds: [{
           id: "minio",
           auth: {
-            endPoint: process.env.TEST_MINIO_ENDPOINT,
-            accessKey: process.env.TEST_MINIO_ACCESS_KEY,
-            secretKey: process.env.TEST_MINIO_SECRET,
-            bucketName: process.env.TEST_MINIO_BUCKET_NAME
+            endPoint: process.env.MINIO_ENDPOINT,
+            accessKey: process.env.MINIO_ACCESS_KEY,
+            secretKey: process.env.MINIO_SECRET,
+            bucketName: process.env.MINIO_BUCKET_NAME
           }
         },],
       },
@@ -32,10 +32,10 @@ describe('project', () => {
         clouds: [{
           id: "minio",
           auth: {
-            endPoint: process.env.TEST_MINIO_ENDPOINT,
-            accessKey: process.env.TEST_MINIO_ACCESS_KEY,
-            secretKey: process.env.TEST_MINIO_SECRET,
-            bucketName: process.env.TEST_MINIO_BUCKET_NAME
+            endPoint: process.env.MINIO_ENDPOINT,
+            accessKey: process.env.MINIO_ACCESS_KEY,
+            secretKey: process.env.MINIO_SECRET,
+            bucketName: process.env.MINIO_BUCKET_NAME
           }
         },],
       },
