@@ -93,7 +93,7 @@
     "remark-preset-lint-recommended": "^7.0.0",
     "remark-rehype": "^11.1.0",
     "remark-stringify": "^11.0.0",
-    "sharp": "^0.33.4",
+    "sharp": "^0.33.5",
     "slug": "^9.1.0",
     "strip-markdown": "^6.0.0",
     "tiny-parse-argv": "^2.4.0",
