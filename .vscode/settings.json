@@ -23,5 +23,9 @@
         "terminal.ansiRed": "#DB2D20",
         "terminal.ansiWhite": "#A5A2A2",
         "terminal.ansiYellow": "#FDED02"
+    },
+    "yaml.schemas": {
+        "file:///Users/anak/.vscode/extensions/docsmsft.docs-yaml-1.0.5/dist/toc.schema.json": "/toc\\.yml/i",
+        "https://www.artillery.io/schema.json": []
     }
 }

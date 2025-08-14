@@ -2,6 +2,8 @@ import { execa } from 'execa';
 import fs from 'fs';
 import translate from './translate.js';
 import htmlToHast from '../../../../lib/remark/htmlToHast.js';
+//#TODO: https://github.com/anfragment/react-email-dynamic
+
 
 export default async (props) => {
 
