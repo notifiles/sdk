@@ -10,7 +10,7 @@ export default async ({
 }) => {
   const buildPath = `${entry.path}/.build`
   if ((await checkFileExists(buildPath))) {
-    await fs.promises.rmdir(
+    await fs.promises.rm(
       buildPath,
       { recursive: true }
     )
@@ -24,7 +24,7 @@ export default async ({
   }))
 
   if ((await checkFileExists(`${entry.path}/.build/temp`))) {
-    await fs.promises.rmdir(
+    await fs.promises.rm(
       `${entry.path}/.build/temp`,
       { recursive: true }
     )

@@ -26,7 +26,7 @@ export default async ({
       if (!force) {
         return false
       }
-      await fs.promises.rmdir(folderPath, { recursive: true })
+      await fs.promises.rm(folderPath, { recursive: true })
     }
 
     await fs.promises.mkdir(folderPath)

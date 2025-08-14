@@ -13,15 +13,16 @@ export default async ({
   settings
 }) => {
   adaptSettings({ settings })
-  const entries = await getEntries({
+  let entries = await getEntries({
     path,
     settings
   })
 
-  await Promise.all(entries.map(async entry => {
+  for (var i in entries) {
+    let entry = entries[i]
     switch (entry.manifest.status) {
       case 'pause': {
-        return
+        continue
       }
       default: break
     }
@@ -33,10 +34,10 @@ export default async ({
     entry = (await cloudify({ entry, settings })).entry
     entry = (await attach({ entry, settings })).entry
     if (settings.dryRun) {
-      return
+      continue
     }
     entry = (await sync({ entry, settings })).entry
-  }))
+  }
 
   return true
 }

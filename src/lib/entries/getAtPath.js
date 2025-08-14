@@ -100,7 +100,7 @@ const perform = async (props) => {
     return results
   }
   catch (e) {
-    console.error(e)
+    console.error(path, e)
     return null
   }
 }
