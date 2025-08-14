@@ -3,7 +3,7 @@ import fs from 'fs';
 import translate from './translate.js';
 import htmlToHast from '../../../../lib/remark/htmlToHast.js';
 //#TODO: https://github.com/anfragment/react-email-dynamic
-import pRetry, { AbortError } from 'p-retry';
+import { retry } from '@lifeomic/attempt';
 
 export default async (props) => {
   const { entry } = props
@@ -90,27 +90,32 @@ export default async (props) => {
       subject,
       'utf-8'
     )
-    const run = async () => {
-      try {
+
+    try {
+      await retry(async (context) => {
         await fs.promises.cp(
           `${path}/manifest.json`,
           buildPaths.manifestFileNameBuilt
         )
         return true
-      }
-      catch (e) {
-        throw new AbortError(e.message);
-      }
+      }, {
+        delay: 200,
+        maxAttempts: 3,
+        initialDelay: 0,
+        minDelay: 0,
+        maxDelay: 0,
+        factor: 0,
+        timeout: 0,
+        jitter: false,
+        initialJitter: false,
+        handleError: null,
+        handleTimeout: null,
+        beforeAttempt: null,
+        calculateDelay: null
+      });
+    } catch (err) {
+      console.log(`Attempt ${err} failed`);
     }
-    pRetry(run, {
-      retries: 15,
-      onFailedAttempt: error => {
-        console.log(`Attempt ${error.attemptNumber} failed. There are ${error.retriesLeft} retries left.`);
-        // 1st request => Attempt 1 failed. There are 4 retries left.
-        // 2nd request => Attempt 2 failed. There are 3 retries left.
-        // …
-      },
-    })
 
     const child = htmlToHast({ data: body })
     const hast = await perform({
