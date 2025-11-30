@@ -49,7 +49,7 @@ export default async ({
           destination,
           filePath,
           err => {
-            console.log(filePath, 'uploaded')
+            console.log('🮱 ', filePath, 'uploaded')
             if (err) {
               console.error(err)
               reject(err)
