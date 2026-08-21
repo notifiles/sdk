@@ -14,7 +14,7 @@ import {
 } from './lib/cache.js'
 import runWithConcurrency from '../../lib/async/runWithConcurrency.js'
 
-const DEFAULT_CONCURRENCY = 4
+const DEFAULT_CONCURRENCY = 10
 
 export default async ({
   path,
