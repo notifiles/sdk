@@ -2,6 +2,7 @@ import fsPath from 'path'
 import fs from 'fs'
 import checkFileExists from '../../../lib/fs/checkFileExists.js'
 import importJSONAsync from '../../../lib/fs/importJSONAsync.js'
+import withFileLock from '../../../lib/fs/fileLock.js'
 
 
 export default async ({
@@ -24,7 +25,9 @@ export default async ({
       ...content,
     }
 
-    await fs.promises.writeFile(filePath, JSON.stringify(_content, null, 2))
+    await withFileLock(fsPath.resolve(filePath), () =>
+      fs.promises.writeFile(filePath, JSON.stringify(_content, null, 2))
+    )
     return true
   } catch (e) {
     console.error(e)

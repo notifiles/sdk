@@ -9,6 +9,9 @@ export default async (props) => {
 
   const { entry, settings } = props
   const { path, textMessage, buildPaths, } = entry
+  // textMessage is null unless the template folder has a textmessage.txt (set in lib/entries/getAtPath.js).
+  // Every template must ship a textmessage.txt (an empty file is fine, see templates/social/subscription/*)
+  // or this destructure throws before the existence check below ever runs.
   const { text, } = textMessage
 
   const textPath = `${path}/textmessage.txt`

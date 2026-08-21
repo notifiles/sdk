@@ -1,5 +1,7 @@
 import fs from "fs"
+import { fileURLToPath } from "url"
 import checkFileExists from "./checkFileExists.js"
+import withFileLock from "./fileLock.js"
 
 const expandEnvPlaceholders = (value) => {
   if (typeof value === 'string') {
@@ -29,7 +31,9 @@ export default async _url => {
     return null
   }
   const fileUrl = new URL(_url, import.meta.url)
-  const parsedPackageJSON = JSON.parse(await fs.promises.readFile(fileUrl, 'utf8'))
+  const parsedPackageJSON = await withFileLock(fileURLToPath(fileUrl), async () => {
+    return JSON.parse(await fs.promises.readFile(fileUrl, 'utf8'))
+  })
   return expandEnvPlaceholders(parsedPackageJSON)
   // } catch (e) {
   //   console.log("[notifiles]", `importJSONAsync → `, e)

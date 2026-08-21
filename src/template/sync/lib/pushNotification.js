@@ -9,6 +9,9 @@ export default async (props) => {
 
   const { entry, settings } = props
   const { path, pushNotification, buildPaths, } = entry
+  // pushNotification is null unless the template folder has a pushnotification.txt (set in lib/entries/getAtPath.js).
+  // Every template must ship a pushnotification.txt (an empty file is fine, see templates/social/subscription/*)
+  // or this destructure throws before the existence check below ever runs.
   const { text, } = pushNotification
 
   const textPath = `${path}/pushnotification.txt`
