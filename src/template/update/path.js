@@ -12,6 +12,9 @@ import {
   getCachedTemplateHash,
   updateTemplateHashCache
 } from './lib/cache.js'
+import runWithConcurrency from '../../lib/async/runWithConcurrency.js'
+
+const DEFAULT_CONCURRENCY = 4
 
 export default async ({
   path,
@@ -28,13 +31,14 @@ export default async ({
   }
 
   const forceUpdate = force || settings.forceUpdate
+  const concurrency = settings.concurrency || DEFAULT_CONCURRENCY
 
-  for (var i in entries) {
-    let entry = entries[i]
+  await runWithConcurrency(entries, concurrency, async (initialEntry) => {
+    let entry = initialEntry
 
     switch (entry.manifest.status) {
       case 'pause': {
-        continue
+        return
       }
       default: break
     }
@@ -43,7 +47,7 @@ export default async ({
     const currentHash = await computeTemplateHash({ path: entry.path })
     if (!forceUpdate && cachedHash && currentHash && cachedHash === currentHash) {
       console.log(`[notifiles] Skip ${entry.slug || entry.name || entry.path}: no changes detected`)
-      continue
+      return
     }
 
     entry = (await format({ entry, settings })).entry
@@ -53,7 +57,7 @@ export default async ({
     entry = (await cloudify({ entry, settings })).entry
     entry = (await attach({ entry, settings })).entry
     if (settings.dryRun) {
-      continue
+      return
     }
     entry = (await sync({ entry, settings })).entry
 
@@ -61,7 +65,7 @@ export default async ({
     if (newHash) {
       await updateTemplateHashCache({ path: entry.path, hash: newHash })
     }
-  }
+  })
 
   return true
 }
