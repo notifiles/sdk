@@ -9,17 +9,19 @@ export default async (props) => {
 
   const { entry, settings } = props
   const { path, pushNotification, buildPaths, } = entry
-  // pushNotification is null unless the template folder has a pushnotification.txt (set in lib/entries/getAtPath.js).
-  // Every template must ship a pushnotification.txt (an empty file is fine, see templates/social/subscription/*)
-  // or this destructure throws before the existence check below ever runs.
-  const { text, } = pushNotification
 
+  // pushNotification is null unless the template folder has a pushnotification.txt
+  // (set in lib/entries/getAtPath.js, populated in build/lib/pushnotification/index.js).
+  // The existence check must run before destructuring it, or a template
+  // that simply doesn't ship this channel crashes here instead of skipping.
   const textPath = `${path}/pushnotification.txt`
   if (!(await checkFileExists(textPath))) {
     return {
       entry
     }
   }
+
+  const { text, } = pushNotification
 
   await fs.promises.writeFile(
     buildPaths.pushNotification.text,

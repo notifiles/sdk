@@ -9,17 +9,19 @@ export default async (props) => {
 
   const { entry, settings } = props
   const { path, textMessage, buildPaths, } = entry
-  // textMessage is null unless the template folder has a textmessage.txt (set in lib/entries/getAtPath.js).
-  // Every template must ship a textmessage.txt (an empty file is fine, see templates/social/subscription/*)
-  // or this destructure throws before the existence check below ever runs.
-  const { text, } = textMessage
 
+  // textMessage is null unless the template folder has a textmessage.txt
+  // (set in lib/entries/getAtPath.js, populated in build/lib/textmessage/index.js).
+  // The existence check must run before destructuring it, or a template
+  // that simply doesn't ship this channel crashes here instead of skipping.
   const textPath = `${path}/textmessage.txt`
   if (!(await checkFileExists(textPath))) {
     return {
       entry
     }
   }
+
+  const { text, } = textMessage
 
   await fs.promises.writeFile(
     buildPaths.textMessage.text,
