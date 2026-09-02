@@ -11,7 +11,9 @@ export default async (props) => {
   } = entry
 
   const sharedItemsPath = `${path}/attachments`
-  let sharedItems = await fs.promises.readdir(sharedItemsPath)
+  let sharedItems = (await checkFileExists(sharedItemsPath))
+    ? await fs.promises.readdir(sharedItemsPath)
+    : []
   let items = (await Promise.all(sharedItems.map(async item => {
     const folderPath = fsPath.join(sharedItemsPath, item)
     const folderPathStat = await fs.promises.stat(folderPath)
