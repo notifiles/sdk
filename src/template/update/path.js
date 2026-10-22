@@ -13,6 +13,7 @@ import {
   updateTemplateHashCache
 } from './lib/cache.js'
 import runWithConcurrency from '../../lib/async/runWithConcurrency.js'
+import publishLocalesIndex from '../locales/publish.js'
 
 const DEFAULT_CONCURRENCY = 10
 
@@ -66,6 +67,11 @@ export default async ({
       await updateTemplateHashCache({ path: entry.path, hash: newHash })
     }
   })
+
+  // The index of every template's locales, unchanged ones included, so a sender picks a locale a template has.
+  if (!settings.dryRun && settings.isLocalesIndexPublished !== false) {
+    await publishLocalesIndex({ entries, settings })
+  }
 
   return true
 }

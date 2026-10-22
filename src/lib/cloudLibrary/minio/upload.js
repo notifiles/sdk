@@ -4,7 +4,7 @@ export default async ({
   sourceUrl,
   filename,
   auth,
-  // contentType = 'image/png'
+  contentType = null,
 }) => {
 
   try {
@@ -33,7 +33,7 @@ export default async ({
     }
 
     const metaData = {
-      // 'Content-Type': contentType,
+      ...(contentType ? { 'Content-Type': contentType } : {}),
     }
 
     const minioResult = await new Promise((resolve, reject) => {
